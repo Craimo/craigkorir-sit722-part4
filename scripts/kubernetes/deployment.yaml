@@ -1,0 +1,50 @@
+# Your Solution
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-catalog-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-catalog
+  template:
+    metadata:
+      labels:
+        app: book-catalog
+    spec:
+      containers:
+      - name: book-catalog
+        image: craigkorir.azurecr.io/book-catalog:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://sit722_ck_user:1Agmwj5O4bjUxqilFNyNfIaafiCy1Xpr@dpg-cr26qk3tq21c73flnolg-a.oregon-postgres.render.com/sit722_ck"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-management-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-management
+  template:
+    metadata:
+      labels:
+        app: inventory-management
+    spec:
+      containers:
+      - name: inventory-management
+        image: inventory-management:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://sit722_ck_user:1Agmwj5O4bjUxqilFNyNfIaafiCy1Xpr@dpg-cr26qk3tq21c73flnolg-a.oregon-postgres.render.com/sit722_ck"
