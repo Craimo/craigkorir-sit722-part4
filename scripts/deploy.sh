@@ -16,9 +16,9 @@ set -u # or set -o nounset
 : "$VERSION"
 
 # Deploy book catalog
-envsubst < ./kubernetes/deployment.yaml | kubectl apply -f -
+envsubst < ./scripts/kubernetes/deployment.yaml | kubectl apply -f -
 
 # Deploy inventory management
-envsubst < ./kubernetes/service.yaml | kubectl apply -f -
+envsubst < ./scripts/kubernetes/service.yaml | kubectl apply -f -
 
 echo "Both services have been deployed successfully."

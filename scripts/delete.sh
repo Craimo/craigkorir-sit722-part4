@@ -16,9 +16,9 @@ set -u # or set -o nounset
 : "$VERSION"
 
 # Delete book catalog deployment
-envsubst < ./book_catalog/kubernetes/deploy.yaml | kubectl delete -f -
+envsubst < ./scripts/kubernetes/deployment.yaml | kubectl delete -f -
 
 # Delete inventory management deployment
-envsubst < ./inventory_management/kubernetes/deploy.yaml | kubectl delete -f -
+envsubst < ./scripts/kubernetes/service.yaml | kubectl delete -f -
 
 echo "Both services have been deleted from Kubernetes successfully."
