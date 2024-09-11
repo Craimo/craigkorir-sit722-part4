@@ -24,12 +24,12 @@ jobs:
         run: ./scripts/build-image.sh
         env:
           DOCKERFILE_PATH: ./book_catalog/Dockerfile
-          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
+          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
 
       - name: Publish
         run: ./scripts/push-image.sh
         env:
-          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
+          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
 
       - uses: tale/kubectl-action@v1
         with:
@@ -39,9 +39,9 @@ jobs:
       - name: Deploy
         run: ./scripts/deploy.sh
         env:
-          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
+          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-            
+
   deploy-inventory-management:
     runs-on: ubuntu-latest
     
@@ -59,12 +59,12 @@ jobs:
         run: ./scripts/build-image.sh
         env:
           DOCKERFILE_PATH: ./inventory_management/Dockerfile
-          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
+          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
 
       - name: Publish
         run: ./scripts/push-image.sh
         env:
-          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
+          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
 
       - uses: tale/kubectl-action@v1
         with:
@@ -76,3 +76,8 @@ jobs:
         env:
           IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+# service verification
+      - name: Verify Deployment
+        run: |
+          kubectl get pods | grep $SERVICE_NAME
+          kubectl logs -l app=$SERVICE_NAME --tail=50
