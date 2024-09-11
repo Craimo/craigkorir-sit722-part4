@@ -41,7 +41,9 @@ jobs:
         env:
           IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
+      - name: echo
+        run: echo ${{ secrets.DATABASE_URL }}
+        
   deploy-inventory-management:
     runs-on: ubuntu-latest
     
