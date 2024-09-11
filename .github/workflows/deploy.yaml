@@ -24,12 +24,12 @@ jobs:
         run: ./scripts/build-image.sh
         env:
           DOCKERFILE_PATH: ./book_catalog/Dockerfile
-          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
+          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
 
       - name: Publish
         run: ./scripts/push-image.sh
         env:
-          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
+          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
 
       - uses: tale/kubectl-action@v1
         with:
@@ -39,7 +39,7 @@ jobs:
       - name: Deploy
         run: ./scripts/deploy.sh
         env:
-          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
+          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
   deploy-inventory-management:
@@ -59,12 +59,12 @@ jobs:
         run: ./scripts/build-image.sh
         env:
           DOCKERFILE_PATH: ./inventory_management/Dockerfile
-          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
+          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
 
       - name: Publish
         run: ./scripts/push-image.sh
         env:
-          IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
+          IMAGE_NAME: ${{ secrets.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ secrets.VERSION }}
 
       - uses: tale/kubectl-action@v1
         with:
