@@ -76,8 +76,3 @@ jobs:
         env:
           IMAGE_NAME: ${{ env.CONTAINER_REGISTRY }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-# service verification
-      # - name: Verify Deployment
-      #   run: |
-      #     kubectl get pods | grep $SERVICE_NAME
-      #     kubectl logs -l app=$SERVICE_NAME --tail=50
